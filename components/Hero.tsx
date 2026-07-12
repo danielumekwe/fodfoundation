@@ -109,9 +109,12 @@ export default function Hero() {
                 DONATE NOW
               </Link>
 
-              <button className="bg-[var(--brand-teal)] hover:bg-[var(--brand-teal-dark)] text-white px-8 py-4 rounded-full font-semibold transition">
+              <Link
+                href="/get-involved"
+                className="bg-[var(--brand-teal)] hover:bg-[var(--brand-teal-dark)] text-white px-8 py-4 rounded-full font-semibold transition"
+              >
                 BECOME A VOLUNTEER
-              </button>
+              </Link>
             </div>
 
             <div className="mt-10 flex items-center gap-4">

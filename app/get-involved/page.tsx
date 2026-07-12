@@ -24,6 +24,8 @@ const partnerWays = [
 export default function GetInvolved() {
   const [submitted, setSubmitted] = useState(false);
   const [name, setName] = useState("");
+  const [sending, setSending] = useState(false);
+  const [notifyFailed, setNotifyFailed] = useState(false);
 
   return (
     <>
@@ -97,15 +99,51 @@ export default function GetInvolved() {
                     We've received your volunteer sign-up and will be in
                     touch soon about how you can get involved.
                   </p>
+
+                  {notifyFailed && (
+                    <p className="mt-3 text-sm leading-6 text-[var(--brand-orange-dark)]">
+                      We couldn&rsquo;t automatically deliver your sign-up —
+                      please email us directly at{" "}
+                      <a
+                        href="mailto:info@fodfoundation.org"
+                        className="font-bold underline"
+                      >
+                        info@fodfoundation.org
+                      </a>
+                      .
+                    </p>
+                  )}
                 </div>
               ) : (
                 <form
                   className="space-y-5"
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
                     const data = new FormData(e.currentTarget);
-                    setName(String(data.get("name") || ""));
-                    setSubmitted(true);
+                    const payload = {
+                      name: String(data.get("name") || ""),
+                      email: String(data.get("email") || ""),
+                      phone: String(data.get("phone") || ""),
+                      location: String(data.get("location") || ""),
+                      skills: String(data.get("skills") || ""),
+                      availability: String(data.get("availability") || ""),
+                      message: String(data.get("message") || ""),
+                    };
+                    setName(payload.name);
+                    setSending(true);
+                    try {
+                      const res = await fetch("/api/volunteer", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                      });
+                      setNotifyFailed(!res.ok);
+                    } catch {
+                      setNotifyFailed(true);
+                    } finally {
+                      setSending(false);
+                      setSubmitted(true);
+                    }
                   }}
                 >
                   <h3 className="text-xl font-extrabold text-[var(--brand-dark)]">
@@ -224,9 +262,10 @@ export default function GetInvolved() {
 
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[var(--brand-orange-dark)]"
+                    disabled={sending}
+                    className="w-full rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[var(--brand-orange-dark)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Sign Up To Volunteer
+                    {sending ? "Please wait…" : "Sign Up To Volunteer"}
                   </button>
                 </form>
               )}

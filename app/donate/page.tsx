@@ -4,10 +4,14 @@ import { useState } from "react";
 import { Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer/Footer";
+import DonationAmountPicker from "@/components/DonationAmountPicker";
 
 export default function Donate() {
   const [submitted, setSubmitted] = useState(false);
   const [donor, setDonor] = useState({ name: "", amount: "" });
+  const [amount, setAmount] = useState("50");
+  const [sending, setSending] = useState(false);
+  const [notifyFailed, setNotifyFailed] = useState(false);
 
   return (
     <>
@@ -130,6 +134,14 @@ export default function Donate() {
                     >
                       info@fodfoundation.org
                     </a>
+
+                    {notifyFailed && (
+                      <p className="mt-4 text-sm leading-6 text-[var(--brand-orange-dark)]">
+                        We couldn&rsquo;t automatically notify our team of your
+                        donation — please email us directly at the address
+                        above so we know to expect your transfer.
+                      </p>
+                    )}
                   </div>
 
                   <div className="mt-8 text-center">
@@ -153,14 +165,30 @@ export default function Donate() {
               ) : (
                 <form
                   className="space-y-6"
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
                     const data = new FormData(e.currentTarget);
-                    setDonor({
+                    const payload = {
                       name: String(data.get("name") || ""),
+                      email: String(data.get("email") || ""),
+                      phone: String(data.get("phone") || ""),
                       amount: String(data.get("amount") || ""),
-                    });
-                    setSubmitted(true);
+                    };
+                    setDonor({ name: payload.name, amount: payload.amount });
+                    setSending(true);
+                    try {
+                      const res = await fetch("/api/donate", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                      });
+                      setNotifyFailed(!res.ok);
+                    } catch {
+                      setNotifyFailed(true);
+                    } finally {
+                      setSending(false);
+                      setSubmitted(true);
+                    }
                   }}
                 >
                   <div>
@@ -212,33 +240,23 @@ export default function Donate() {
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="amount"
-                      className="mb-2 block text-sm font-bold text-[var(--brand-dark)]"
-                    >
-                      Donation Amount (£)
+                    <label className="mb-2 block text-sm font-bold text-[var(--brand-dark)]">
+                      Donation Amount
                     </label>
-                    <div className="flex overflow-hidden border border-gray-300 bg-white">
-                      <div className="flex items-center justify-center bg-[var(--brand-orange)] px-5 text-lg font-bold text-white">
-                        £
-                      </div>
-                      <input
-                        id="amount"
-                        name="amount"
-                        type="number"
-                        min="1"
-                        step="1"
-                        required
-                        className="w-full bg-transparent px-4 py-3 text-sm outline-none"
-                      />
-                    </div>
+                    <DonationAmountPicker
+                      value={amount}
+                      onChange={setAmount}
+                      name="amount"
+                      currency="£"
+                    />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[var(--brand-orange-dark)]"
+                    disabled={sending}
+                    className="w-full rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold uppercase tracking-wide text-white transition hover:bg-[var(--brand-orange-dark)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    Continue To Donate
+                    {sending ? "Please wait…" : "Continue To Donate"}
                   </button>
                 </form>
               )}

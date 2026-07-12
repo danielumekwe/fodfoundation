@@ -5,6 +5,9 @@ import { CheckCircle2 } from "lucide-react";
 
 export default function Footer() {
   const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false);
+  const [notifyFailed, setNotifyFailed] = useState(false);
 
   return (
     <>
@@ -62,17 +65,38 @@ export default function Footer() {
             </div>
 
             {subscribed ? (
-              <p className="footer-newsletter-thanks">
-                <CheckCircle2 className="footer-newsletter-thanks-icon" aria-hidden="true" />
-                Thanks for subscribing — watch your inbox for stories of
-                impact.
-              </p>
+              <div>
+                <p className="footer-newsletter-thanks">
+                  <CheckCircle2 className="footer-newsletter-thanks-icon" aria-hidden="true" />
+                  Thanks for subscribing — watch your inbox for stories of
+                  impact.
+                </p>
+                {notifyFailed && (
+                  <p className="footer-newsletter-error">
+                    We couldn&rsquo;t confirm your subscription automatically —
+                    please email info@fodfoundation.org to be added.
+                  </p>
+                )}
+              </div>
             ) : (
               <form
                 className="footer-newsletter"
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  setSubscribed(true);
+                  setSending(true);
+                  try {
+                    const res = await fetch("/api/newsletter", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ email }),
+                    });
+                    setNotifyFailed(!res.ok);
+                  } catch {
+                    setNotifyFailed(true);
+                  } finally {
+                    setSending(false);
+                    setSubscribed(true);
+                  }
                 }}
               >
                 <p className="footer-newsletter-label">
@@ -82,12 +106,18 @@ export default function Footer() {
                   <input
                     type="email"
                     required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="Your email"
                     aria-label="Email address"
                     className="footer-newsletter-input"
                   />
-                  <button type="submit" className="footer-newsletter-btn">
-                    Subscribe
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="footer-newsletter-btn"
+                  >
+                    {sending ? "…" : "Subscribe"}
                   </button>
                 </div>
               </form>
@@ -375,6 +405,15 @@ export default function Footer() {
           width: 16px;
           height: 16px;
           margin-top: 2px;
+        }
+
+        .footer-newsletter-error {
+          margin-top: 10px;
+          max-width: 300px;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--brand-orange-dark);
+          line-height: 1.6;
         }
 
         .footer-col-title {

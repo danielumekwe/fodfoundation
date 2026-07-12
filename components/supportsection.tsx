@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { Montserrat } from "next/font/google";
+import DonationAmountPicker from "./DonationAmountPicker";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -10,6 +12,8 @@ const montserrat = Montserrat({
 });
 
 export default function SupportSection() {
+  const [amount, setAmount] = useState("50");
+
   return (
     <section
       id="donate"
@@ -76,13 +80,13 @@ export default function SupportSection() {
               Get Involved
             </p>
 
-            <h2 className="max-w-xl text-5xl font-extrabold leading-tight text-[var(--brand-dark)]">
+            <h2 className="max-w-xl text-4xl font-extrabold leading-tight text-[var(--brand-dark)] sm:text-5xl">
               Changing lives is what drives us.
             </h2>
 
-            <div className="my-8 h-[3px] w-72 border-b-2 border-dashed border-[var(--brand-orange)]" />
+            <div className="my-8 h-[3px] w-full max-w-72 border-b-2 border-dashed border-[var(--brand-orange)]" />
 
-            <p className="max-w-lg text-lg leading-8 text-gray-500">
+            <p className="max-w-lg text-base leading-7 text-gray-500 sm:text-lg sm:leading-8">
               Join us. Volunteer your time, donate your resources, or partner
               with us to build a Nigeria where no one is left behind because
               of a disability.
@@ -105,7 +109,7 @@ export default function SupportSection() {
 
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
-                href="/contact"
+                href="/get-involved"
                 className="rounded-full border-2 border-[var(--brand-teal)] px-8 py-4 text-sm font-bold uppercase tracking-wide text-[var(--brand-teal)] transition hover:bg-[var(--brand-teal)] hover:text-white"
               >
                 Get Involved
@@ -121,54 +125,35 @@ export default function SupportSection() {
           </div>
 
           {/* Donation Card */}
-          <div className="rounded-[32px] bg-[#fafafa] p-10 shadow-sm">
+          <div className="rounded-[24px] bg-[#fafafa] p-6 shadow-sm sm:rounded-[32px] sm:p-10">
             <div className="text-center">
-              <h3 className="text-5xl font-extrabold text-[var(--brand-dark)]">
+              <h3 className="text-3xl font-extrabold text-[var(--brand-dark)] sm:text-5xl">
                 Make A Donation
               </h3>
 
-              <p className="mt-5 text-lg leading-8 text-gray-500">
+              <p className="mt-5 text-base leading-7 text-gray-500 sm:text-lg sm:leading-8">
                 Your gift puts a child in school, a wheelchair under someone
                 who has crawled for years, and a skill in the hands of
                 someone told they would never work.
               </p>
             </div>
 
-            {/* Amount Input */}
-            <div className="mt-10 flex overflow-hidden rounded-full border border-gray-200 bg-white">
-              <div className="flex items-center justify-center bg-[var(--brand-orange)] px-6 text-xl font-bold text-white">
-                $
-              </div>
-
-              <input
-                type="text"
-                defaultValue="100"
-                className="w-full bg-transparent px-5 py-4 text-xl font-semibold text-[var(--brand-dark)] outline-none"
+            {/* Amount Picker */}
+            <div className="mt-10">
+              <DonationAmountPicker
+                value={amount}
+                onChange={setAmount}
+                currency="£"
               />
             </div>
 
-            {/* Buttons */}
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {["$10", "$25", "$50", "$100", "$250", "Other"].map(
-                (amount, index) => (
-                  <button
-                    key={index}
-                    className={`rounded-full border px-6 py-4 text-lg font-bold transition-all duration-300 ${
-                      amount === "$100"
-                        ? "bg-[var(--brand-orange)] text-white"
-                        : "border-gray-300 bg-white text-[var(--brand-dark)] hover:bg-[var(--brand-orange)] hover:text-white"
-                    }`}
-                  >
-                    {amount}
-                  </button>
-                )
-              )}
-            </div>
-
             {/* Donate Button */}
-            <button className="mt-8 w-full rounded-full bg-[var(--brand-orange)] px-8 py-5 text-lg font-extrabold uppercase tracking-wide text-white transition hover:scale-[1.01] hover:bg-[var(--brand-orange-dark)]">
+            <Link
+              href="/donate"
+              className="mt-8 flex w-full items-center justify-center rounded-full bg-[var(--brand-orange)] px-8 py-5 text-lg font-extrabold uppercase tracking-wide text-white transition hover:scale-[1.01] hover:bg-[var(--brand-orange-dark)]"
+            >
               Donate Now
-            </button>
+            </Link>
 
             <p className="mt-8 text-center text-sm leading-7 text-gray-500">
               By contributing, you agree to the{" "}

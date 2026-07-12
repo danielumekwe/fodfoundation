@@ -39,6 +39,8 @@ const socials = [
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [notifyFailed, setNotifyFailed] = useState(false);
 
   return (
     <>
@@ -163,15 +165,50 @@ export default function Contact() {
             {/* Form */}
             <div className="bg-[#f6f4f2] p-8 md:p-10">
               {sent ? (
-                <p className="text-lg font-semibold text-[var(--brand-dark)]">
-                  Thank you for reaching out — we&apos;ll get back to you soon.
-                </p>
+                <div>
+                  <p className="text-lg font-semibold text-[var(--brand-dark)]">
+                    Thank you for reaching out — we&apos;ll get back to you soon.
+                  </p>
+                  {notifyFailed && (
+                    <p className="mt-3 text-sm leading-6 text-[var(--brand-orange-dark)]">
+                      We couldn&rsquo;t automatically deliver your message —
+                      please email us directly at{" "}
+                      <a
+                        href="mailto:info@fodfoundation.org"
+                        className="font-bold underline"
+                      >
+                        info@fodfoundation.org
+                      </a>
+                      .
+                    </p>
+                  )}
+                </div>
               ) : (
                 <form
                   className="space-y-6"
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    setSent(true);
+                    const data = new FormData(e.currentTarget);
+                    const payload = {
+                      name: String(data.get("name") || ""),
+                      email: String(data.get("email") || ""),
+                      subject: String(data.get("subject") || ""),
+                      message: String(data.get("message") || ""),
+                    };
+                    setSending(true);
+                    try {
+                      const res = await fetch("/api/contact", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                      });
+                      setNotifyFailed(!res.ok);
+                    } catch {
+                      setNotifyFailed(true);
+                    } finally {
+                      setSending(false);
+                      setSent(true);
+                    }
                   }}
                 >
                   <div>
@@ -239,9 +276,10 @@ export default function Contact() {
 
                   <button
                     type="submit"
-                    className="rounded-full bg-[var(--brand-orange)] px-9 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-orange-dark)]"
+                    disabled={sending}
+                    className="rounded-full bg-[var(--brand-orange)] px-9 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-orange-dark)] disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    SEND MESSAGE
+                    {sending ? "SENDING…" : "SEND MESSAGE"}
                   </button>
                 </form>
               )}
