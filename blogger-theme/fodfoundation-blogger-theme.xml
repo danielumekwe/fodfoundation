@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1' name='viewport'/>
+  <title><data:blog.pageTitle/></title>
+  <b:if cond='data:blog.metaDescription'>
+    <meta expr:content='data:blog.metaDescription' name='description'/>
+  </b:if>
+  <link href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&amp;display=swap' rel='stylesheet'/>
+  <b:include data='blog' name='all-head-content'/>
+
+  <b:skin><![CDATA[
+    :root{
+      --brand-teal:#1f8a82;
+      --brand-teal-dark:#146560;
+      --brand-teal-light:#e7f4f3;
+      --brand-orange:#f4753d;
+      --brand-orange-dark:#d9581e;
+      --brand-dark:#16191c;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family:'Montserrat',sans-serif;
+      color:var(--brand-dark);
+      background:#ffffff;
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block;}
+    .container{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+    /* Header */
+    .site-header{
+      background:#ffffff;
+      border-bottom:1px solid rgba(22,25,28,0.08);
+      position:sticky;top:0;z-index:50;
+    }
+    .site-header-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:24px;padding:18px 0;
+    }
+    .site-logo{
+      font-size:28px;font-weight:900;font-style:italic;color:var(--brand-dark);
+      flex-shrink:0;
+    }
+    .site-logo .dot{color:var(--brand-orange);}
+    .site-nav{display:flex;align-items:center;gap:28px;flex-wrap:wrap;font-weight:600;font-size:14px;}
+    .site-nav a{transition:color .2s;}
+    .site-nav a:hover, .site-nav a.is-active{color:var(--brand-orange);}
+    .site-nav a.is-active{border-bottom:2px solid var(--brand-orange);padding-bottom:4px;}
+    .donate-pill{
+      background:var(--brand-orange);color:#fff !important;padding:10px 24px;
+      border-radius:999px;font-weight:700;font-size:14px;white-space:nowrap;
+      transition:background .2s;
+    }
+    .donate-pill:hover{background:var(--brand-orange-dark);}
+    .nav-toggle{display:none;background:none;border:0;font-size:26px;cursor:pointer;color:var(--brand-dark);}
+
+    /* Page banner */
+    .page-banner{
+      background:var(--brand-dark);color:#fff;text-align:center;
+      padding:64px 24px;
+    }
+    .page-banner p{margin:0 0 10px;color:var(--brand-orange);font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;}
+    .page-banner h1{margin:0;font-size:40px;font-weight:800;line-height:1.15;}
+
+    /* Layout */
+    .content-wrap{
+      display:grid;grid-template-columns:2fr 1fr;gap:48px;
+      padding:56px 0;align-items:start;
+    }
+
+    /* Post cards */
+    .blog-posts{display:flex;flex-direction:column;gap:40px;}
+    .post-card{
+      border:1px solid rgba(22,25,28,0.08);border-radius:20px;overflow:hidden;
+      transition:box-shadow .2s, transform .2s;background:#fff;
+    }
+    .post-card:hover{box-shadow:0 12px 30px rgba(22,25,28,0.08);transform:translateY(-2px);}
+    .post-thumb{width:100%;height:280px;object-fit:cover;}
+    .post-body-inner{padding:28px;}
+    .post-date{margin:0 0 10px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--brand-teal);}
+    .post-title{margin:0 0 12px;font-size:26px;font-weight:800;line-height:1.25;}
+    .post-title a:hover{color:var(--brand-orange);}
+    .post-snippet{margin:0 0 16px;font-size:15px;line-height:1.7;color:#5b6169;}
+    .post-meta-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+    .post-readmore{font-weight:700;font-size:14px;color:var(--brand-orange);}
+    .post-readmore:hover{color:var(--brand-teal);}
+    .post-comments-link{font-size:13px;font-weight:600;color:#8a8f96;}
+
+    .blog-pager{display:flex;justify-content:space-between;margin-top:16px;font-weight:700;font-size:14px;}
+    .blog-pager a{color:var(--brand-teal);}
+    .blog-pager a:hover{color:var(--brand-orange);}
+
+    /* Single post */
+    .post-full .post-title{font-size:34px;}
+    .post-full .post-thumb{height:auto;border-radius:16px;margin-bottom:24px;}
+    .post-full .post-body-inner{padding:0;}
+    .post-full-content{font-size:16px;line-height:1.85;color:#33373c;}
+    .post-full-content img{border-radius:12px;margin:20px 0;}
+    .post-labels{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px;}
+    .post-labels a{
+      background:var(--brand-teal-light);color:var(--brand-teal-dark);
+      font-size:12px;font-weight:700;padding:6px 14px;border-radius:999px;
+    }
+
+    /* Sidebar */
+    .sidebar-widget{
+      background:#fafafa;border-radius:20px;padding:28px;margin-bottom:28px;
+      border:1px solid rgba(22,25,28,0.06);
+    }
+    .sidebar-widget h2{margin:0 0 18px;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--brand-dark);}
+    .about-card{background:var(--brand-dark);color:#fff;}
+    .about-card h2{color:#fff;}
+    .about-card p{font-size:14px;line-height:1.7;color:rgba(255,255,255,0.75);margin:0 0 18px;}
+    .about-card .donate-pill{display:inline-block;}
+    .search-widget input{
+      width:100%;padding:12px 16px;border-radius:999px;border:1px solid #d8dade;
+      font-family:inherit;font-size:14px;outline:none;
+    }
+    .search-widget input:focus{border-color:var(--brand-orange);}
+    .label-list{list-style:none;margin:0;padding:0;}
+    .label-list li{border-bottom:1px solid rgba(22,25,28,0.06);}
+    .label-list li:last-child{border-bottom:0;}
+    .label-list a{
+      display:flex;justify-content:space-between;padding:10px 0;font-size:14px;font-weight:600;
+    }
+    .label-list a:hover{color:var(--brand-orange);}
+
+    /* Footer */
+    .site-footer{background:var(--brand-dark);color:rgba(255,255,255,0.7);padding:56px 0 24px;margin-top:40px;}
+    .footer-top{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .footer-logo{font-size:26px;font-weight:900;font-style:italic;color:#fff;margin-bottom:14px;}
+    .footer-logo .dot{color:var(--brand-orange);}
+    .footer-tagline{font-size:13px;line-height:1.7;max-width:280px;}
+    .footer-col h4{color:#fff;font-size:14px;font-weight:700;margin:0 0 16px;}
+    .footer-col ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+    .footer-col a{font-size:13px;transition:color .2s;}
+    .footer-col a:hover{color:var(--brand-orange);}
+    .footer-bottom{
+      display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+      padding-top:22px;font-size:12px;color:rgba(255,255,255,0.5);
+    }
+    .footer-bottom a{color:rgba(255,255,255,0.5);}
+    .attribution{font-size:11px;color:rgba(255,255,255,0.35);margin-top:8px;}
+
+    @media (max-width:900px){
+      .content-wrap{grid-template-columns:1fr;}
+      .footer-top{grid-template-columns:1fr;}
+      .site-nav{
+        display:none;position:absolute;top:100%;left:0;right:0;background:#fff;
+        flex-direction:column;align-items:flex-start;gap:0;
+        border-top:1px solid rgba(22,25,28,0.08);box-shadow:0 12px 20px rgba(0,0,0,0.06);
+      }
+      .site-nav.is-open{display:flex;}
+      .site-nav a{width:100%;padding:14px 24px;border-bottom:1px solid rgba(22,25,28,0.06);}
+      .site-nav .donate-pill{margin:14px 24px;}
+      .nav-toggle{display:block;}
+      .site-header-inner{position:relative;}
+    }
+    @media (max-width:520px){
+      .page-banner h1{font-size:30px;}
+      .post-thumb{height:200px;}
+    }
+  ]]></b:skin>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class='site-header'>
+    <div class='container site-header-inner'>
+      <a class='site-logo' expr:href='data:blog.homepageUrl'>focus<span class='dot'>.</span></a>
+
+      <nav class='site-nav' id='siteNav'>
+        <a expr:class='"is-active"' href='https://fodfoundation.org/'>Home</a>
+        <a href='https://fodfoundation.org/about'>About Us</a>
+        <a href='https://fodfoundation.org/team'>Our Team</a>
+        <a href='https://fodfoundation.org/get-involved'>Get Involved</a>
+        <a href='https://fodfoundation.org/gallery'>Our Work</a>
+        <a expr:href='data:blog.homepageUrl'>Blog</a>
+        <a href='https://fodfoundation.org/contact'>Contact Us</a>
+        <a class='donate-pill' href='https://fodfoundation.org/donate'>Donate</a>
+      </nav>
+
+      <button class='nav-toggle' id='navToggle' onclick='document.getElementById("siteNav").classList.toggle("is-open")' type='button'>&#9776;</button>
+    </div>
+  </header>
+
+  <!-- ============ PAGE BANNER (post/page title on non-index pages) ============ -->
+  <b:if cond='data:blog.pageType != "index"'>
+    <div class='page-banner'>
+      <p>FOD Foundation Blog</p>
+      <h1><data:blog.pageTitle/></h1>
+    </div>
+  <b:else/>
+    <div class='page-banner'>
+      <p>Stories &amp; Updates</p>
+      <h1>The FOD Foundation Blog</h1>
+    </div>
+  </b:if>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <div class='container content-wrap'>
+
+    <!-- Posts column -->
+    <b:section class='main' id='main' maxwidgets='1' showaddelement='no'>
+      <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2'>
+        <b:widget-settings>
+          <b:widget-setting name='showDateHeader'>false</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main' var='top'>
+          <div class='blog-posts hfeed'>
+            <b:loop values='data:top.posts' var='post'>
+              <b:include data='post' name='post'/>
+            </b:loop>
+          </div>
+          <b:include name='pageNavigation'/>
+        </b:includable>
+
+        <b:includable id='post' var='post'>
+          <b:if cond='data:blog.pageType == "item"'>
+            <article class='post-card post-full' expr:id='"post-" + data:post.id'>
+              <div class='post-body-inner'>
+                <b:if cond='data:post.featuredImage'>
+                  <img class='post-thumb' expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 1000, "16:9")'/>
+                </b:if>
+                <p class='post-date'><data:post.date/> · <data:post.author.name/></p>
+                <h1 class='post-title'><data:post.title/></h1>
+                <div class='post-full-content'>
+                  <data:post.body/>
+                </div>
+                <b:if cond='data:post.labels'>
+                  <div class='post-labels'>
+                    <b:loop values='data:post.labels' var='label'>
+                      <a expr:href='data:label.url'><data:label.name/></a>
+                    </b:loop>
+                  </div>
+                </b:if>
+              </div>
+            </article>
+          <b:else/>
+            <article class='post-card' expr:id='"post-" + data:post.id'>
+              <b:if cond='data:post.featuredImage'>
+                <a expr:href='data:post.url'>
+                  <img class='post-thumb' expr:alt='data:post.title' expr:src='resizeImage(data:post.featuredImage, 700, "16:9")'/>
+                </a>
+              </b:if>
+              <div class='post-body-inner'>
+                <p class='post-date'><data:post.date/></p>
+                <h2 class='post-title'><a expr:href='data:post.url'><data:post.title/></a></h2>
+                <p class='post-snippet'><data:post.snippet/></p>
+                <div class='post-meta-row'>
+                  <a class='post-readmore' expr:href='data:post.url'>Read More &#8594;</a>
+                  <a class='post-comments-link' expr:href='data:post.url + "#comments"'><data:post.numberOfComments/> Comments</a>
+                </div>
+              </div>
+            </article>
+          </b:if>
+        </b:includable>
+
+        <b:includable id='pageNavigation'>
+          <div class='blog-pager'>
+            <b:if cond='data:olderPageUrl'>
+              <a expr:href='data:olderPageUrl'>&#8592; Older Posts</a>
+            <b:else/>
+              <span/>
+            </b:if>
+            <b:if cond='data:newerPageUrl'>
+              <a expr:href='data:newerPageUrl'>Newer Posts &#8594;</a>
+            </b:if>
+          </div>
+        </b:includable>
+      </b:widget>
+    </b:section>
+
+    <!-- Sidebar column -->
+    <b:section class='sidebar' id='sidebar' showaddelement='yes'>
+
+      <b:widget id='HTML1' locked='false' title='About' type='HTML' version='2'>
+        <b:widget-settings>
+          <b:widget-setting name='content'/>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <div class='sidebar-widget about-card'>
+            <h2>focus<span class='dot' style='color:var(--brand-orange);'>.</span></h2>
+            <p>Focus on Disability Foundation empowers children and adults living with disabilities in Nigeria through education, healthcare, and direct support.</p>
+            <a class='donate-pill' href='https://fodfoundation.org/donate'>Donate Now</a>
+          </div>
+        </b:includable>
+      </b:widget>
+
+      <b:widget id='BlogSearch1' locked='false' title='Search This Blog' type='BlogSearch' version='2'>
+        <b:widget-settings/>
+        <b:includable id='main'>
+          <div class='sidebar-widget search-widget'>
+            <b:if cond='data:title'><h2><data:title/></h2></b:if>
+            <form expr:action='data:blog.homepageUrl + "search"' method='get' target='_top'>
+              <input maxlength='255' name='q' placeholder='Search articles…' type='text'/>
+            </form>
+          </div>
+        </b:includable>
+      </b:widget>
+
+      <b:widget id='Label1' locked='false' title='Categories' type='Label' version='2'>
+        <b:widget-settings>
+          <b:widget-setting name='sorting'>ALPHA</b:widget-setting>
+          <b:widget-setting name='display'>list</b:widget-setting>
+          <b:widget-setting name='showType'>ALL</b:widget-setting>
+          <b:widget-setting name='showFreqNumbers'>true</b:widget-setting>
+        </b:widget-settings>
+        <b:includable id='main'>
+          <div class='sidebar-widget'>
+            <b:if cond='data:title'><h2><data:title/></h2></b:if>
+            <ul class='label-list'>
+              <b:loop values='data:labels' var='label'>
+                <li>
+                  <a expr:href='data:label.url'>
+                    <span><data:label.name/></span>
+                    <span><data:label.count/></span>
+                  </a>
+                </li>
+              </b:loop>
+            </ul>
+          </div>
+        </b:includable>
+      </b:widget>
+
+    </b:section>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class='site-footer'>
+    <div class='container'>
+      <div class='footer-top'>
+        <div>
+          <div class='footer-logo'>focus<span class='dot'>.</span></div>
+          <p class='footer-tagline'>A non-profit empowering children and adults living with disabilities in Nigeria to live self-sufficient, dignified lives.</p>
+        </div>
+        <div class='footer-col'>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href='https://fodfoundation.org/'>Home</a></li>
+            <li><a href='https://fodfoundation.org/about'>About Us</a></li>
+            <li><a href='https://fodfoundation.org/team'>Our Team</a></li>
+            <li><a href='https://fodfoundation.org/gallery'>Gallery</a></li>
+          </ul>
+        </div>
+        <div class='footer-col'>
+          <h4>Get Involved</h4>
+          <ul>
+            <li><a href='https://fodfoundation.org/get-involved'>Volunteer</a></li>
+            <li><a href='https://fodfoundation.org/donate'>Donate</a></li>
+            <li><a href='https://fodfoundation.org/contact'>Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class='footer-bottom'>
+        <p>© <data:blog.title/> — All rights reserved.</p>
+        <p>info@fodfoundation.org</p>
+      </div>
+      <b:section class='attribution' id='attribution' maxwidgets='1' showaddelement='no'>
+        <b:widget id='Attribution1' locked='true' title='' type='Attribution' version='2'>
+          <b:widget-settings/>
+          <b:includable id='main'>
+            <p class='attribution'>Powered by Blogger</p>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+  </footer>
+
+</body>
+</html>
