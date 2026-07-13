@@ -188,6 +188,13 @@ export default function Footer() {
         </div>
       </footer>
 
+      <div className="footer-attribution">
+        Designed by{' '}
+        <a href="https://www.web365ng.com" target="_blank" rel="noopener noreferrer">
+          Web365 Nigeria
+        </a>
+      </div>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
 
@@ -515,6 +522,23 @@ export default function Footer() {
           font-size: 13px;
         }
 
+        .footer-attribution {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 40px 28px;
+          text-align: center;
+          font-size: 13px;
+          color: #9ca3af;
+        }
+        .footer-attribution a {
+          color: var(--brand-teal);
+          text-decoration: none;
+          font-weight: 600;
+        }
+        .footer-attribution a:hover {
+          color: var(--brand-orange);
+        }
+
         /* ── Responsive ── */
         @media (max-width: 960px) {
           .cta-inner {
@@ -538,6 +562,7 @@ export default function Footer() {
           .footer { padding: 50px 24px 0; }
           .footer-inner { grid-template-columns: 1fr; gap: 36px; }
           .footer-bottom { flex-direction: column; align-items: flex-start; }
+          .footer-attribution { padding: 0 24px 24px; }
         }
       `}</style>
     </>
