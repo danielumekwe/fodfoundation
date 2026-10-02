@@ -21,3 +21,13 @@ body {
 .writing-mode-vertical {
   writing-mode: vertical-rl;
 }
+.cause-swiper .swiper-pagination-bullet {
+  background: #d1d5db;
+  opacity: 1;
+}
+
+.cause-swiper .swiper-pagination-bullet-active {
+  background: var(--brand-orange);
+  width: 24px;
+  border-radius: 9999px;
+}

@@ -13,16 +13,17 @@ export default function Footer() {
     <>
       {/* ── CTA Banner ── */}
       <section className="cta-banner">
+        <img src="/slide1.jpg" alt="" aria-hidden="true" className="cta-bg" />
         <div className="cta-texture" aria-hidden="true" />
         <div className="cta-inner">
+          <p className="cta-tagline">Time To Change</p>
           <h2 className="cta-heading">Together We Can<br />Change Lives</h2>
-          <div className="cta-divider" aria-hidden="true" />
           <p className="cta-body">
             Your support — through volunteering, donations, or partnership —
             helps us restore dignity, independence, and opportunity to people
             living with disabilities across Nigeria.
           </p>
-          <a href="/donate" className="cta-btn">Get Involved Today</a>
+          <a href="/get-involved" className="cta-btn">Get Involved Today</a>
         </div>
       </section>
 
@@ -205,76 +206,68 @@ export default function Footer() {
           position: relative;
           background: var(--brand-dark);
           overflow: hidden;
-          padding: 64px 40px;
+          padding: 120px 40px;
+        }
+
+        .cta-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
 
         .cta-texture {
           position: absolute;
           inset: 0;
           pointer-events: none;
-          background-image:
-            radial-gradient(ellipse 12px 28px at 6% 30%, rgba(244,117,61,0.18) 0%, transparent 100%),
-            radial-gradient(ellipse 10px 24px at 9% 65%, rgba(31,138,130,0.15) 0%, transparent 100%),
-            radial-gradient(ellipse 14px 32px at 92% 20%, rgba(244,117,61,0.15) 0%, transparent 100%),
-            radial-gradient(ellipse 10px 22px at 88% 55%, rgba(31,138,130,0.13) 0%, transparent 100%),
-            radial-gradient(ellipse 12px 28px at 95% 80%, rgba(244,117,61,0.10) 0%, transparent 100%),
-            radial-gradient(ellipse 8px 20px at 3% 85%, rgba(31,138,130,0.10) 0%, transparent 100%);
+          background: rgba(6, 32, 30, 0.82);
         }
 
         .cta-inner {
           position: relative;
-          max-width: 1200px;
+          max-width: 760px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr auto 1fr auto;
+          display: flex;
+          flex-direction: column;
           align-items: center;
-          gap: 32px 0;
+          text-align: center;
+        }
+
+        .cta-tagline {
+          font-size: 20px;
+          font-weight: 600;
+          font-style: italic;
+          color: var(--brand-orange);
+          margin: 0 0 12px;
         }
 
         .cta-heading {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(28px, 3.2vw, 44px);
+          font-size: clamp(32px, 4.6vw, 56px);
           font-weight: 800;
           color: #fff;
           margin: 0;
           line-height: 1.15;
-          grid-column: 1;
-        }
-
-        .cta-divider {
-          grid-column: 2;
-          width: 1px;
-          height: 80px;
-          margin: 0 48px;
-          background: repeating-linear-gradient(
-            to bottom,
-            rgba(244,117,61,0.5) 0 5px,
-            transparent 5px 10px
-          );
         }
 
         .cta-body {
-          grid-column: 3;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 15px;
-          color: rgba(255,255,255,0.72);
+          font-size: 16px;
+          color: rgba(255,255,255,0.8);
           line-height: 1.7;
-          margin: 0;
+          margin: 24px 0 0;
         }
 
         .cta-btn {
-          grid-column: 4;
           display: inline-block;
-          padding: 16px 32px;
+          margin-top: 36px;
+          padding: 16px 36px;
           background: var(--brand-orange);
           color: #fff;
-          font-family: 'Montserrat', sans-serif;
           font-size: 15px;
           font-weight: 700;
           border-radius: 50px;
           text-decoration: none;
           white-space: nowrap;
-          margin-left: 48px;
           box-shadow: 0 4px 24px rgba(244,117,61,0.35);
           transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
         }
@@ -541,23 +534,11 @@ export default function Footer() {
 
         /* ── Responsive ── */
         @media (max-width: 960px) {
-          .cta-inner {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-          }
-          .cta-heading  { grid-column: 1; grid-row: 1; }
-          .cta-divider  { display: none; }
-          .cta-body     { grid-column: 2; grid-row: 1; }
-          .cta-btn      { grid-column: 1 / -1; grid-row: 2; margin: 0; justify-self: start; }
-
           .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px 32px; }
         }
 
         @media (max-width: 600px) {
-          .cta-banner { padding: 48px 24px; }
-          .cta-inner  { grid-template-columns: 1fr; }
-          .cta-body   { grid-column: 1; grid-row: 2; }
-          .cta-btn    { grid-row: 3; }
+          .cta-banner { padding: 72px 24px; }
 
           .footer { padding: 50px 24px 0; }
           .footer-inner { grid-template-columns: 1fr; gap: 36px; }
