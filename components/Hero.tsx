@@ -152,16 +152,16 @@ export default function Hero() {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur transition hover:bg-white/20"
+                className="inline-flex min-w-[180px] items-center justify-center rounded-full bg-white/10 px-8 py-4 font-semibold text-white backdrop-blur transition hover:bg-white/20"
               >
-                Discover More <span aria-hidden="true">↗</span>
+                Discover More
               </Link>
 
               <Link
                 href="/donate"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-orange)] px-8 py-4 font-semibold text-white transition hover:bg-[var(--brand-orange-dark)]"
+                className="inline-flex min-w-[180px] items-center justify-center rounded-full bg-[var(--brand-orange)] px-8 py-4 font-semibold text-white transition hover:bg-[var(--brand-orange-dark)]"
               >
-                Donate Now <span aria-hidden="true">↗</span>
+                Donate Now
               </Link>
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, X, Search, Mail, Phone, Headset, HeartHandshake, ArrowUpRight } from "lucide-react";
+import { Menu, X, Search, Mail, Phone, Headset, HeartHandshake } from "lucide-react";
 import { useState } from "react";
 
 const navItems = [
@@ -128,7 +128,7 @@ export default function Navbar() {
             href="/donate"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-orange)] px-7 py-4 text-sm font-bold text-white hover:bg-[var(--brand-orange-dark)] transition"
           >
-            Donate Now <ArrowUpRight size={16} aria-hidden="true" />
+            Donate Now
           </Link>
         </div>
 

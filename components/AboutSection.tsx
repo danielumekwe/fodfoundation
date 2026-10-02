@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
-import { ArrowUpRight, Play } from "lucide-react";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -42,18 +41,17 @@ export default function AboutSection() {
           <div className="mt-8 flex flex-wrap items-center gap-6">
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-teal)] px-8 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-teal-dark)]"
+              className="inline-flex min-w-[170px] items-center justify-center rounded-full bg-[var(--brand-teal)] px-8 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-teal-dark)]"
             >
-              Discover Now <ArrowUpRight size={16} aria-hidden="true" />
+              Discover Now
             </Link>
 
             <a
               href={VIDEO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-orange-dark)]"
+              className="inline-flex min-w-[170px] items-center justify-center rounded-full bg-[var(--brand-orange)] px-8 py-4 text-sm font-bold text-white transition hover:bg-[var(--brand-orange-dark)]"
             >
-              <Play size={16} fill="currentColor" aria-hidden="true" />
               Watch Now
             </a>
 
