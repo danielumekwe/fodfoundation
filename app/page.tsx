@@ -6,6 +6,7 @@ import VoicesSection from "@/components/voicessection";
 import SupportSection from "@/components/supportsection";
 import ActionBanner from "@/components/ActionBanner";
 import FaqSection from "@/components/FaqSection";
+import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer/Footer";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
       <SupportSection />
       <ActionBanner />
       <FaqSection />
+      <BlogSection />
       <Footer />
     </>
   );

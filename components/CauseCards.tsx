@@ -47,7 +47,7 @@ const causes = [
 
 export default function CauseCards() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-[var(--brand-teal-light)] py-20">
       <div className="mx-auto max-w-7xl px-6">
         <Swiper
           modules={[Autoplay, Pagination]}
@@ -64,7 +64,7 @@ export default function CauseCards() {
         >
           {causes.map((item) => (
             <SwiperSlide key={item.title} className="!h-auto">
-              <div className="group flex h-full flex-col rounded-[28px] bg-gray-100 p-2.5 transition hover:shadow-xl">
+              <div className="group flex h-full flex-col rounded-[28px] bg-white p-2.5 shadow-sm transition hover:shadow-xl">
                 <div className="relative overflow-hidden rounded-[22px]">
                   <img
                     src={item.image}
@@ -76,7 +76,7 @@ export default function CauseCards() {
                   </span>
                 </div>
 
-                <div className="mt-2.5 flex flex-1 flex-col rounded-[22px] bg-white p-6">
+                <div className="mt-2.5 flex flex-1 flex-col rounded-[22px] bg-gray-50 p-6">
                   <h3 className="text-xl font-bold leading-snug text-[var(--brand-dark)]">
                     {item.title}
                   </h3>
